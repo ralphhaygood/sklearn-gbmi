@@ -10,7 +10,7 @@ import math
 
 import numpy as np
 
-import sklearn.ensemble.partial_dependence as partial_dependence
+import sklearn.inspection.partial_dependence as partial_dependence
 
 
 def h(gbm, array_or_frame, indices_or_columns = 'all'):
