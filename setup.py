@@ -1,8 +1,29 @@
 #! /usr/bin/env python
 
-from setuptools import setup
 
 VERSION = '1.0.1'
+
+
+import os
+
+import numpy as np
+
+from setuptools import Extension, setup
+
+
+try:
+    from Cython.Build import cythonize
+except ImportError:
+    cythonize = None
+
+use_cythonize = cythonize is not None and bool(int(os.getenv('USE_CYTHONIZE', 0)))
+
+
+extensions = [Extension('sklearn_gbmi._partial_dependence_tree', ['sklearn_gbmi/_partial_dependence_tree'+('.pyx' if use_cythonize else '.c')])]
+
+if use_cythonize:
+    extensions = cythonize(extensions)
+
 
 setup(
     name = 'sklearn-gbmi',
@@ -45,5 +66,7 @@ setup(
         ],
     zip_safe = True,
     install_requires = ['numpy', 'scikit-learn'],
+    ext_modules = extensions,
+    include_dirs = [np.get_include()],
     packages = ['sklearn_gbmi']
 )

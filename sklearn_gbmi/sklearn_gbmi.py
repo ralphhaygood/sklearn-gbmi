@@ -10,7 +10,7 @@ import math
 
 import numpy as np
 
-import sklearn.inspection.partial_dependence as partial_dependence
+from .partial_dependence import partial_dependence
 
 
 def h(gbm, array_or_frame, indices_or_columns = 'all'):
@@ -198,7 +198,7 @@ def get_arr_and_model_inds(array_or_frame, indices_or_columns):
 
 def compute_f_vals(gbm, model_inds, arr, inds):
     feat_vals, feat_val_counts = unique_rows_with_counts(arr[:, inds])
-    uncentd_f_vals = partial_dependence.partial_dependence(gbm, model_inds[(inds,)], grid = feat_vals)[0][0]
+    uncentd_f_vals = partial_dependence(gbm, model_inds[(inds,)], feat_vals)[0]
     mean_uncentd_f_val = np.dot(feat_val_counts, uncentd_f_vals)/arr.shape[0]
     f_vals = uncentd_f_vals-mean_uncentd_f_val
     return dict(zip(map(tuple, feat_vals), f_vals))
