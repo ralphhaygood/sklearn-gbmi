@@ -1,3 +1,13 @@
+**Warning:** this package has reached the end of its life.
+It is incompatible with recent versions of scikit-learn, and I (Ralph Haygood) have neither the time nor the interest to solve this problem.
+If you wish to have a go at it yourself, by all means fork the GitHub repository and proceed.
+
+Ultimately, the problem may be one or more incompatibilities between recent versions of scikit-learn and/or NumPy and a wad (25,644 lines) of C code not written by me, which I was forced to add to this package when the maintainers of scikit-learn replaced the `sklearn.ensemble.partial_dependence.partial_dependence` function with the not-fully-equivalent `sklearn.inspection.partial_dependence` function.
+This package depended on the grid argument of the former, which is missing from the latter.
+I worked around this defect by extracting the code that had implemented the grid argument and integrating it into this package.
+However, this code may well depend on internal characteristics of scikit-learn and/or NumPy that have changed since then.
+
+
 sklearn-gbmi: scikit-learn gradient-boosting-model interactions
 ===============================================================
 
